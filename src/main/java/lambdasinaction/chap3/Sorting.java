@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static java.util.Comparator.comparing;
 
@@ -26,7 +27,7 @@ public class Sorting {
         // [Apple{color='green', weight=30}, Apple{color='green', weight=80}, Apple{color='green', weight=155}]
         inventory.sort(new Comparator<Apple>() {
             public int compare(Apple a1, Apple a2){
-                return a1.getWeight().compareTo(a2.getWeight()); 
+                return a1.getWeight().compareTo(a2.getWeight());
         }});
         System.out.println(inventory);
 
@@ -44,7 +45,10 @@ public class Sorting {
         // 4
         // [Apple{color='red', weight=10}, Apple{color='red', weight=20}, Apple{color='green', weight=155}]
         inventory.sort(comparing(Apple::getWeight));
-        System.out.println(inventory);       
+        System.out.println(inventory);
+
+        Supplier<Apple> appleSupplier = () -> new Apple();
+        Supplier<Apple> appleSupplier2 = Apple :: new;
     }
 
     public static class Apple {
@@ -54,6 +58,10 @@ public class Sorting {
         public Apple(Integer weight, String color){
             this.weight = weight;
             this.color = color;
+        }
+
+        public Apple() {
+
         }
 
         public Integer getWeight() {
