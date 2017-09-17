@@ -13,9 +13,7 @@ import java.time.temporal.TemporalAdjuster;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import java.time.temporal.TemporalAdjusters;
 
 public class DateTimeExamples {
 
@@ -92,19 +90,19 @@ public class DateTimeExamples {
 
     private static void useTemporalAdjuster() {
         LocalDate date = LocalDate.of(2014, 3, 18);
-        date = date.with(nextOrSame(DayOfWeek.SUNDAY));
+        date = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
         System.out.println(date);
-        date = date.with(lastDayOfMonth());
+        date = date.with(TemporalAdjusters.lastDayOfMonth());
         System.out.println(date);
 
         date = date.with(new NextWorkingDay());
         System.out.println(date);
-        date = date.with(nextOrSame(DayOfWeek.FRIDAY));
+        date = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
         System.out.println(date);
         date = date.with(new NextWorkingDay());
         System.out.println(date);
 
-        date = date.with(nextOrSame(DayOfWeek.FRIDAY));
+        date = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
         System.out.println(date);
         date = date.with(temporal -> {
             DayOfWeek dow = DayOfWeek.of(temporal.get(ChronoField.DAY_OF_WEEK));
@@ -146,6 +144,23 @@ public class DateTimeExamples {
                 .toFormatter(Locale.ITALIAN);
 
         System.out.println(date.format(complexFormatter));
+    }
+
+    private static void userZone() {
+        //定义一个时区
+        ZoneId shanghaiZone = ZoneId.of("Asia/Shanghai");
+        LocalDate date = LocalDate.of(2014, Month.MARCH, 18);
+        ZonedDateTime zdt1 = date.atStartOfDay(shanghaiZone);
+        System.out.println(zdt1);
+
+        LocalDateTime dateTime = LocalDateTime.of(2014, Month.MARCH, 18, 13, 45);
+        ZonedDateTime zdt2 = dateTime.atZone(shanghaiZone);
+        System.out.println(zdt2);
+
+        Instant instant = Instant.now();
+        ZonedDateTime zdt3 = instant.atZone(shanghaiZone);
+        System.out.println(zdt3);
+
     }
 
 }
