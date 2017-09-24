@@ -15,6 +15,7 @@ public class OptionalMain {
                      .orElse("Unknown");
     }
 
+    /*
     public Set<String> getCarInsuranceNames(List<Person> persons) {
         return persons.stream()
                       .map(Person::getCar)
@@ -23,4 +24,5 @@ public class OptionalMain {
                       .flatMap(Optional::stream)
                       .collect(toSet());
     }
+    */
 }
