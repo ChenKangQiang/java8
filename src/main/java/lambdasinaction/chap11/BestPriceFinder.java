@@ -26,6 +26,12 @@ public class BestPriceFinder {
         }
     });
 
+    /**
+     * 顺序查询每个商店
+     *
+     * @param product
+     * @return
+     */
     public List<String> findPricesSequential(String product) {
         return shops.stream()
                 .map(shop -> shop.getPrice(product))
