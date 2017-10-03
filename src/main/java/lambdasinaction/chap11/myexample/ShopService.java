@@ -1,5 +1,6 @@
 package lambdasinaction.chap11.myexample;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 /**
@@ -14,9 +15,12 @@ public interface ShopService {
      * @param productName
      * @return
      */
-    Product getPrice(String productName);
+    Product getPrice(String productName, Integer shopId);
 
 
-    Future<Product> getPriceAsync(String productName);
+    Future<Product> getPriceAsync(String productName, Integer shopId);
+
+
+    List<Product> batchQueryPrice(String productName, List<Integer> shopIds);
 
 }

@@ -27,7 +27,7 @@ public class BestPriceFinder {
     });
 
     /**
-     * 顺序查询每个商店
+     * 顺序查询每个商店中某个特定商品的价格
      *
      * @param product
      * @return
@@ -40,6 +40,12 @@ public class BestPriceFinder {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 使用并行流来查询每个商店中某个商品的价格
+     *
+     * @param product
+     * @return
+     */
     public List<String> findPricesParallel(String product) {
         return shops.parallelStream()
                 .map(shop -> shop.getPrice(product))
@@ -48,6 +54,12 @@ public class BestPriceFinder {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * CompletableFuture.join用于等待所有future返回结果
+     *
+     * @param product
+     * @return
+     */
     public List<String> findPricesFuture(String product) {
         List<CompletableFuture<String>> priceFutures = findPricesStream(product)
                 .collect(Collectors.<CompletableFuture<String>>toList());
@@ -57,6 +69,12 @@ public class BestPriceFinder {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * thenCompose，可以以流水线的形式组合多个future
+     *
+     * @param product
+     * @return
+     */
     public Stream<CompletableFuture<String>> findPricesStream(String product) {
         return shops.stream()
                 .map(shop -> CompletableFuture.supplyAsync(() -> shop.getPrice(product), executor))

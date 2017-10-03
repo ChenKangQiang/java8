@@ -16,4 +16,5 @@ public class Product implements Serializable {
     private String productName;
     private BigDecimal price;
     private DiscountEnum discountEnum;
+    private Integer shopId;
 }
